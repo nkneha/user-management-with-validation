@@ -4,11 +4,13 @@ import com.example.UserManagement.model.User;
 import com.example.UserManagement.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 public class UserController {
     @Autowired
     UserService userService;
@@ -17,11 +19,11 @@ public class UserController {
         return userService.getAllUsers();
     }
     @PostMapping("Users")   // create users list
-    String addUserList(@RequestBody List<User> users){
+    String addUserList( @RequestBody @Valid List<User> users){
         return userService.createUser(users);
     }
     @PostMapping("user")   //adding single user
-    String addUser(@Valid @RequestBody User user){
+    String addUser(@RequestBody @Valid User user){
         return userService.createSingleUser(user);
     }
 
